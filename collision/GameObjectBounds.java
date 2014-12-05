@@ -28,21 +28,18 @@ public class GameObjectBounds {
 	public boolean intersects(double x, double y, double width, double height) {
 		if (shape == CollisionShape.CIRCLE) {
 			if (width <= 0.0 || height <= 0.0) {
-				System.out.println("1");
 				return false;
 			}
 			// Normalize the rectangular coordinates compared to the ellipse
 			// having a center at 0,0 and a radius of 0.5.
 			double ellw = getWidth();
 			if (ellw <= 0.0) {
-				System.out.println("2");
 				return false;
 			}
 			double normx0 = ( x - getX() ) / ellw - 0.5;
 			double normx1 = normx0 + width / ellw;
 			double ellh = getHeight();
 			if (ellh <= 0.0) {
-				System.out.println("3");
 				return false;
 			}
 			double normy0 = ( y - getY() ) / ellh - 0.5;
@@ -69,13 +66,10 @@ public class GameObjectBounds {
 			} else {
 				neary = 0.0;
 			}
-			System.out.println("4 " + ( ( nearx * nearx + neary * neary ) < 0.25 ));
-			System.out.println("4 " + ( nearx * nearx + neary * neary ));
 			return ( nearx * nearx + neary * neary ) < 0.25;
 		} else {
 			double x0 = getX();
 			double y0 = getY();
-			System.out.println("5 " + ( x + width > x0 && y + height > y0 && x < x0 + getWidth() && y < y0 + getHeight() ));
 			return ( x + width > x0 && y + height > y0 && x < x0 + getWidth() && y < y0 + getHeight() );
 		}
 	}

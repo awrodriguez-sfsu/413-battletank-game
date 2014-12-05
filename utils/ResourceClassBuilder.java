@@ -25,14 +25,11 @@ public class ResourceClassBuilder {
 	private static ArrayList<String> sounds = new ArrayList<String>();
 
 	public static void main(String[] args) {
-		// String resourcePath = "/home/arod/Desktop//Wingman/Resources";
-		// String solidResourcesText =
-		// "/home/arod/Desktop/Wingman/solid_resources.txt";
-		// String imageResourcesText =
-		// "/home/arod/Desktop/Wingman/image_resources.txt";
-		// String resourcesJSON = "/home/arod/Desktop/Wingman/resources.json";
+		// Linux
+		String basePath = "/home/arod/Desktop/TankResources/";
 
-		String basePath = "C:\\Users\\arodr101\\Desktop\\TankResources\\";
+		// Windows
+		// String basePath = "C:\\Users\\arodr101\\Desktop\\TankResources\\";
 
 		String resourcePath = basePath + "Resources";
 		String solidResourcesText = basePath + "solid_objects.txt";
@@ -40,7 +37,7 @@ public class ResourceClassBuilder {
 		String maps = basePath + "map1.txt";
 
 		String jarRun = "../"; // Applet Configuration
-		//String jarRun = ""; // Jar Configuration
+		// String jarRun = ""; // Jar Configuration
 
 		System.out.println("Getting solid_resources.txt");
 		try (BufferedReader br = new BufferedReader(new FileReader(solidResourcesText))) {
@@ -284,7 +281,7 @@ public class ResourceClassBuilder {
 
 			// member variables
 			writer.write(tab + tab + "// Bounds" + newline);
-			writer.write(tab + tab + "public double center_x, center_y, top, bottom, left, right, front;" + newline);
+			writer.write(tab + tab + "public double centerX, centerY, top, bottom, left, right, front;" + newline);
 			writer.write(tab + tab + "public long number_of_shapes;" + newline);
 			writer.write(tab + tab + "public String name;" + newline);
 			writer.write(newline);
@@ -301,8 +298,8 @@ public class ResourceClassBuilder {
 			writer.write(tab + tab + tab + tab + "JSONObject objectSpecifications = (JSONObject) jsonObject.get(name);" + newline);
 			writer.write(tab + tab + tab + tab + "JSONObject bounds = (JSONObject) objectSpecifications.get(\"bounds\");" + newline);
 			writer.write(newline);
-			writer.write(tab + tab + tab + tab + "this.center_x = (double) Double.parseDouble(bounds.get(\"center_x\").toString());" + newline);
-			writer.write(tab + tab + tab + tab + "this.center_y = (double) Double.parseDouble(bounds.get(\"center_y\").toString());" + newline);
+			writer.write(tab + tab + tab + tab + "this.centerX = (double) Double.parseDouble(bounds.get(\"center_x\").toString());" + newline);
+			writer.write(tab + tab + tab + tab + "this.centerY = (double) Double.parseDouble(bounds.get(\"center_y\").toString());" + newline);
 			writer.write(tab + tab + tab + tab + "this.top = (double) Double.parseDouble(bounds.get(\"top\").toString());" + newline);
 			writer.write(tab + tab + tab + tab + "this.bottom = (double) Double.parseDouble(bounds.get(\"bottom\").toString());" + newline);
 			writer.write(tab + tab + tab + tab + "this.left = (double) Double.parseDouble(bounds.get(\"left\").toString());" + newline);

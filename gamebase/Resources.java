@@ -29,11 +29,9 @@ public class Resources {
 	public static Dimension mapDimension;
 
 	public static ArrayList<String> lines = new ArrayList<String>();
-	private Image background, background_large, basic_upgrade, border, healthbar0, healthbar1, healthbar2, healthbar3, healthbar4, healthbar5, healthbar6, healthbar7, healthbar8, heavy_upgrade, life, life_pickup, light_upgrade, shell_basic,
-			shell_heavy, shell_light, tank_blue_basic, tank_blue_heavy, tank_blue_light, tank_gray_basic, tank_gray_heavy, tank_gray_light, tank_red_basic, tank_red_heavy, tank_red_light, wall1, wall2;
+	private Image background, background_large, basic_upgrade, boder_horizontal, boder_vertical, border, healthbar0, healthbar1, healthbar2, healthbar3, healthbar4, healthbar5, healthbar6, healthbar7, healthbar8, heavy_upgrade, life, life_pickup, light_upgrade, shell_basic, shell_heavy, shell_light, tank_blue_basic, tank_blue_heavy, tank_blue_light, tank_gray_basic, tank_gray_heavy, tank_gray_light, tank_red_basic, tank_red_heavy, tank_red_light, wall1, wall2;
 
-	private SolidObjectSpec border_spec, wall1_spec, wall2_spec, shell_basic_spec, shell_heavy_spec, shell_light_spec, tank_blue_basic_spec, tank_blue_heavy_spec, tank_blue_light_spec, tank_red_basic_spec, tank_red_heavy_spec, tank_red_light_spec,
-			basic_upgrade_spec, heavy_upgrade_spec, light_upgrade_spec, life_pickup_spec;
+	private SolidObjectSpec border_spec, wall1_spec, wall2_spec, shell_basic_spec, shell_heavy_spec, shell_light_spec, tank_blue_basic_spec, tank_blue_heavy_spec, tank_blue_light_spec, tank_red_basic_spec, tank_red_heavy_spec, tank_red_light_spec, basic_upgrade_spec, heavy_upgrade_spec, light_upgrade_spec, life_pickup_spec;
 
 	public AudioClip large_explosion_sound, shot;
 
@@ -42,6 +40,8 @@ public class Resources {
 			background = ImageIO.read(new File("../resources/background.png"));
 			background_large = ImageIO.read(new File("../resources/background_large.png"));
 			basic_upgrade = ImageIO.read(new File("../resources/basic_upgrade.png"));
+			boder_horizontal = ImageIO.read(new File("../resources/boder_horizontal.png"));
+			boder_vertical = ImageIO.read(new File("../resources/boder_vertical.png"));
 			border = ImageIO.read(new File("../resources/border.png"));
 			healthbar0 = ImageIO.read(new File("../resources/healthbar0.png"));
 			healthbar1 = ImageIO.read(new File("../resources/healthbar1.png"));
@@ -78,6 +78,8 @@ public class Resources {
 		images.put("background", background);
 		images.put("background_large", background_large);
 		images.put("basic_upgrade", basic_upgrade);
+		images.put("boder_horizontal", boder_horizontal);
+		images.put("boder_vertical", boder_vertical);
 		images.put("border", border);
 		images.put("healthbar0", healthbar0);
 		images.put("healthbar1", healthbar1);
@@ -214,7 +216,7 @@ public class Resources {
 
 		// Bounds
 		public double centerX, centerY, top, bottom, left, right, front;
-		public long numberOfShapes;
+		public long number_of_shapes;
 		public String name;
 
 		private JSONParser parser;
@@ -238,10 +240,10 @@ public class Resources {
 				this.front = (double) Double.parseDouble(bounds.get("front").toString());
 
 				JSONObject collision = (JSONObject) objectSpecifications.get("collision");
-				this.numberOfShapes = (long) Long.parseLong(collision.get("number_of_shapes").toString());
+				this.number_of_shapes = (long) Long.parseLong(collision.get("number_of_shapes").toString());
 
 				JSONObject JSONshapes = (JSONObject) collision.get("shapes");
-				for (int i = 1; i <= numberOfShapes; i++) {
+				for (int i = 1; i <= number_of_shapes; i++) {
 					JSONObject shape = (JSONObject) JSONshapes.get("shape" + i);
 					JSONArray params = (JSONArray) shape.get("params");
 					shapes.add(new Shape((String) shape.get("type"), params));

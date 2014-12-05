@@ -104,9 +104,12 @@ public class GameBase extends JApplet implements Runnable {
 
 		BufferedImage player1View = bufferedImage.getSubimage(player1.view.x, player1.view.y, player1.view.width, player1.view.height);
 		BufferedImage player2View = bufferedImage.getSubimage(player2.view.x, player2.view.y, player2.view.width, player2.view.height);
+		Image miniMap = bufferedImage.getScaledInstance(( 1600 + dimension.width ) / 10, ( 1600 + dimension.height ) / 10, Image.SCALE_FAST);
 
+		graphics.clearRect(0, 0, miniMap.getWidth(this), miniMap.getHeight(this));
 		graphics.drawImage(player1View, 0, 0, ( dimension.width / 2 ) - 10, dimension.height, this);
 		graphics.drawImage(player2View, ( dimension.width / 2 ) + 10, 0, ( dimension.width / 2 ) - 10, dimension.height, this);
+		graphics.drawImage(miniMap, 0, 0, this);
 	}
 
 	private Graphics2D createGraphics(int width, int height) {
@@ -181,10 +184,6 @@ public class GameBase extends JApplet implements Runnable {
 				player2Shots.remove(i);
 			}
 		}
-
-		// Mini map
-		Image miniMap = bufferedImage.getScaledInstance(( 1600 + dimension.width ) / 10, ( 1600 + dimension.height ) / 10, Image.SCALE_FAST);
-		graphics2d.drawImage(miniMap, dimension.width, dimension.height - ( miniMap.getHeight(this) / 2 ), this);
 	}
 
 	private void drawBackground(Graphics2D graphics2d) {

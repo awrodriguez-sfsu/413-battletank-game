@@ -13,13 +13,10 @@ import gamebase.Resources;
 
 public class Tile extends GameObject {
 
-	private TileType type;
-
 	public Image tileImage;
 
 	public Tile(TileType type, double posX, double posY) {
 		super(GameImageType.getType(type.getResourceName()), GameObjectType.BACKGROUND, posX, posY);
-		this.type = type;
 		this.tileImage = Resources.getImage(type.getResourceName());
 	}
 
