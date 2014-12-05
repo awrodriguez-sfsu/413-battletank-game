@@ -7,9 +7,6 @@ import gamebase.Resources;
 
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.util.Iterator;
-
-import collision.GameObjectBounds;
 
 public class MainActor extends Actor {
 
@@ -48,11 +45,6 @@ public class MainActor extends Actor {
 		}
 
 		view.setLocation((int) posX + GameBase.getGameScreenDifference().width - ( viewWidth / 2 ), (int) posY + GameBase.getGameScreenDifference().height - ( viewHeight / 2 ));
-
-		for (Iterator<GameObjectBounds> iterator = getGameObjectBounds().iterator(); iterator.hasNext();) {
-			GameObjectBounds bounds = (GameObjectBounds) iterator.next();
-			bounds.update(posX + GameBase.getGameScreenDifference().width, posY + GameBase.getGameScreenDifference().height);
-		}
 	}
 
 	@Override
@@ -129,6 +121,8 @@ public class MainActor extends Actor {
 			Projectile pShot = new Projectile(GameImageType.SHELL_HEAVY, GameImageType.TANK_BLUE_HEAVY, posX, posY, direction);
 			shots.add(pShot);
 		}
+
+		setCanFire(false);
 	}
 
 	public void adjustHealth(int amount) {

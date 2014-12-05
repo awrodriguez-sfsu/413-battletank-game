@@ -84,6 +84,8 @@ public abstract class GameObject {
 				}
 			}
 		}
+
+		updateCollision();
 	}
 
 	public void draw(Graphics2D graphics2d, AffineTransform transform, ImageObserver observer) {
@@ -99,6 +101,8 @@ public abstract class GameObject {
 				}
 			}
 		}
+
+		updateCollision();
 	}
 
 	public GameObjectType getGameObjectType() {
@@ -138,6 +142,8 @@ public abstract class GameObject {
 	}
 
 	public abstract void update();
+
+	public abstract void updateCollision();
 
 	public abstract boolean isVisible();
 

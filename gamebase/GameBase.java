@@ -14,6 +14,7 @@ import java.util.Iterator;
 import javax.swing.JApplet;
 
 import actors.MainActor;
+import actors.Projectile;
 import background.Tile;
 import controller.Controls;
 import enums.GameImageType;
@@ -138,6 +139,48 @@ public class GameBase extends JApplet implements Runnable {
 
 		player2.update();
 		player2.draw(graphics2d, transform2, this);
+
+		ArrayList<Projectile> player1Shots = player1.getShots();
+		for (int i = 0; i < player1Shots.size(); i++) {
+			Projectile b = (Projectile) player1Shots.get(i);
+			if (b.isVisible()) {
+				AffineTransform transformShot1 = new AffineTransform();
+				transformShot1.translate(b.getPosX() + deltaX, b.getPosY() + deltaY);
+				transformShot1.rotate(Math.toRadians(-b.getDirection()), 16, 16);
+
+				b.update();
+				b.draw(graphics2d, transformShot1, this);
+
+				if (b.isColliding(player2)) {
+					player2.adjustHealth(-1);
+					player1Shots.remove(i);
+				}
+
+			} else {
+				player1Shots.remove(i);
+			}
+		}
+
+		ArrayList<Projectile> player2Shots = player2.getShots();
+		for (int i = 0; i < player2Shots.size(); i++) {
+			Projectile b = (Projectile) player2Shots.get(i);
+			if (b.isVisible()) {
+				AffineTransform transformShot1 = new AffineTransform();
+				transformShot1.translate(b.getPosX() + deltaX, b.getPosY() + deltaY);
+				transformShot1.rotate(Math.toRadians(-b.getDirection()), 16, 16);
+
+				b.update();
+				b.draw(graphics2d, transformShot1, this);
+
+				if (b.isColliding(player1)) {
+					player1.adjustHealth(-1);
+					player2Shots.remove(i);
+				}
+
+			} else {
+				player2Shots.remove(i);
+			}
+		}
 
 		// Mini map
 		Image miniMap = bufferedImage.getScaledInstance(( 1600 + dimension.width ) / 10, ( 1600 + dimension.height ) / 10, Image.SCALE_FAST);

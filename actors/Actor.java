@@ -139,6 +139,14 @@ public abstract class Actor extends GameObject {
 		return false;
 	}
 
+	@Override
+	public void updateCollision() {
+		for (Iterator<GameObjectBounds> iterator = getGameObjectBounds().iterator(); iterator.hasNext();) {
+			GameObjectBounds bounds = (GameObjectBounds) iterator.next();
+			bounds.update(posX + GameBase.getGameScreenDifference().width, posY + GameBase.getGameScreenDifference().height);
+		}
+	}
+
 	public abstract void moveForward();
 
 	public abstract void moveBackward();

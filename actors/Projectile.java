@@ -1,11 +1,7 @@
 package actors;
 
-import java.util.Iterator;
-
-import collision.GameObjectBounds;
 import enums.GameImageType;
 import enums.GameObjectType;
-import gamebase.GameBase;
 import gamebase.Resources;
 
 public class Projectile extends Actor {
@@ -41,11 +37,6 @@ public class Projectile extends Actor {
 
 		if (isRotatingLeft || isRotatingRight) {
 			direction += deflection;
-		}
-
-		for (Iterator<GameObjectBounds> iterator = getGameObjectBounds().iterator(); iterator.hasNext();) {
-			GameObjectBounds bounds = (GameObjectBounds) iterator.next();
-			bounds.update(posX + GameBase.getGameScreenDifference().width, posY + GameBase.getGameScreenDifference().height);
 		}
 	}
 

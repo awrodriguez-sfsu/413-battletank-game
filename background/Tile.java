@@ -17,8 +17,6 @@ public class Tile extends GameObject {
 
 	public Image tileImage;
 
-	private int side;
-
 	public Tile(TileType type, double posX, double posY) {
 		super(GameImageType.getType(type.getResourceName()), GameObjectType.BACKGROUND, posX, posY);
 		this.type = type;
@@ -26,7 +24,10 @@ public class Tile extends GameObject {
 	}
 
 	@Override
-	public void update() {
+	public void update() {}
+
+	@Override
+	public void updateCollision() {
 
 		for (Iterator<GameObjectBounds> iterator = getGameObjectBounds().iterator(); iterator.hasNext();) {
 			GameObjectBounds bounds = (GameObjectBounds) iterator.next();
