@@ -29,9 +29,11 @@ public class Resources {
 	public static Dimension mapDimension;
 
 	public static ArrayList<String> lines = new ArrayList<String>();
-	private Image background, background_large, basic_upgrade, boder_horizontal, boder_vertical, border, healthbar0, healthbar1, healthbar2, healthbar3, healthbar4, healthbar5, healthbar6, healthbar7, healthbar8, heavy_upgrade, life, life_pickup, light_upgrade, shell_basic, shell_heavy, shell_light, tank_blue_basic, tank_blue_heavy, tank_blue_light, tank_gray_basic, tank_gray_heavy, tank_gray_light, tank_red_basic, tank_red_heavy, tank_red_light, wall1, wall2;
+	private Image background, background_large, basic_upgrade, boder_horizontal, boder_vertical, border, healthbar0, healthbar1, healthbar2, healthbar3, healthbar4, healthbar5, healthbar6, healthbar7, healthbar8, heavy_upgrade, life, life_pickup,
+			light_upgrade, shell_basic, shell_heavy, shell_light, tank_blue_basic, tank_blue_heavy, tank_blue_light, tank_gray_basic, tank_gray_heavy, tank_gray_light, tank_red_basic, tank_red_heavy, tank_red_light, wall1, wall2;
 
-	private SolidObjectSpec border_spec, wall1_spec, wall2_spec, shell_basic_spec, shell_heavy_spec, shell_light_spec, tank_blue_basic_spec, tank_blue_heavy_spec, tank_blue_light_spec, tank_red_basic_spec, tank_red_heavy_spec, tank_red_light_spec, basic_upgrade_spec, heavy_upgrade_spec, light_upgrade_spec, life_pickup_spec;
+	private SolidObjectSpec border_spec, wall1_spec, wall2_spec, shell_basic_spec, shell_heavy_spec, shell_light_spec, tank_blue_basic_spec, tank_blue_heavy_spec, tank_blue_light_spec, tank_red_basic_spec, tank_red_heavy_spec, tank_red_light_spec,
+			basic_upgrade_spec, heavy_upgrade_spec, light_upgrade_spec, life_pickup_spec;
 
 	public AudioClip large_explosion_sound, shot;
 

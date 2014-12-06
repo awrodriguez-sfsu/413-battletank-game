@@ -23,6 +23,7 @@ public abstract class Actor extends GameObject {
 	protected boolean isMovingBackward = false;
 	protected boolean isRotatingLeft = false;
 	protected boolean isRotatingRight = false;
+	protected boolean isStopped = true;
 
 	protected boolean canFire = true;
 	protected boolean isAlive = true;
@@ -118,6 +119,7 @@ public abstract class Actor extends GameObject {
 		speedX = 0;
 		speedY = 0;
 
+		isStopped = true;
 		isMovingForward = false;
 		isMovingBackward = false;
 	}

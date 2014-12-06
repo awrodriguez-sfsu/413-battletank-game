@@ -16,8 +16,8 @@ public class MainActor extends Actor {
 	private final double MOVEMENT_SPEED = 15;
 	private int deflection = 3;
 
-	private int viewWidth = ( dimension.width / 2 ) - 10;
-	private int viewHeight = dimension.height;
+	private int viewWidth = ( dimension.width / 2 ) - 10 + 128;
+	private int viewHeight = dimension.height + 128;
 
 	private Image healthBar = Resources.health.get(8 - health);
 

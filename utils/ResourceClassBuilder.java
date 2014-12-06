@@ -26,10 +26,10 @@ public class ResourceClassBuilder {
 
 	public static void main(String[] args) {
 		// Linux
-		String basePath = "/home/arod/Desktop/TankResources/";
+		// String basePath = "/home/arod/Desktop/TankResources/";
 
 		// Windows
-		// String basePath = "C:\\Users\\arodr101\\Desktop\\TankResources\\";
+		String basePath = "C:\\Users\\arodr101\\Desktop\\TankResources\\";
 
 		String resourcePath = basePath + "Resources";
 		String solidResourcesText = basePath + "solid_objects.txt";
