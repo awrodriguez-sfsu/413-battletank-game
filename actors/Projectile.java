@@ -17,11 +17,11 @@ public class Projectile extends Actor {
 	}
 
 	private static double getX(double posX, GameImageType shooter, GameImageType gameImage, double direction) {
-		return ( 36 + posX - Resources.getSolidSpec(gameImage.getResourceName()).centerX + ( 50 * Math.cos(Math.toRadians(-direction)) ) );
+		return posX + Resources.getSolidSpec(shooter.getResourceName()).centerX + 40 * Math.cos(Math.toRadians(-direction));
 	}
 
 	private static double getY(double posY, GameImageType shooter, GameImageType gameImage, double direction) {
-		return ( Resources.getSolidSpec(shooter.getResourceName()).centerY + posY - Resources.getSolidSpec(gameImage.getResourceName()).centerY + ( 50 * Math.sin(Math.toRadians(-direction)) ) );
+		return posY + Resources.getSolidSpec(shooter.getResourceName()).centerY + 40 * Math.sin(Math.toRadians(-direction));
 	}
 
 	@Override
