@@ -55,7 +55,7 @@ public class GameBase extends JApplet implements Runnable {
 
 		mapDimension = loadMap();
 
-		player1 = new MainActor(GameImageType.TANK_BLUE_BASIC, GameObjectType.PLAYER1, 132, 132);
+		player1 = new MainActor(GameImageType.TANK_BLUE_BASIC, GameObjectType.PLAYER1, 100, 100);
 		player2 = new MainActor(GameImageType.TANK_RED_BASIC, GameObjectType.PLAYER2, 1032, 1032);
 
 		controls = new Controls();
@@ -104,34 +104,48 @@ public class GameBase extends JApplet implements Runnable {
 
 	@Override
 	public void paint(Graphics graphics) {
-		Graphics2D graphics2d = createGraphics(mapDimension.width + dimension.width, mapDimension.height + dimension.height);
-		drawGame(graphics2d);
-		graphics2d.dispose();
-
-		BufferedImage player1View;
-		BufferedImage player2View;
-		try {
-			player1View = bufferedImage.getSubimage(player1.view.x, player1.view.y, player1.view.width, player1.view.height);
-			player2View = bufferedImage.getSubimage(player2.view.x, player2.view.y, player2.view.width, player2.view.height);
-		} catch (RasterFormatException exception) {
-			player1View = null;
-			player2View = null;
-			exception.printStackTrace();
+		if (player1.isAlive() && player2.isAlive()) {
+			Graphics2D graphics2d = createGraphics(mapDimension.width + dimension.width, mapDimension.height + dimension.height);
+			drawGame(graphics2d);
+			graphics2d.dispose();
+			BufferedImage player1View;
+			BufferedImage player2View;
+			try {
+				player1View = bufferedImage.getSubimage(player1.view.x, player1.view.y, player1.view.width, player1.view.height);
+				player2View = bufferedImage.getSubimage(player2.view.x, player2.view.y, player2.view.width, player2.view.height);
+			} catch (RasterFormatException exception) {
+				player1View = null;
+				player2View = null;
+				exception.printStackTrace();
+			}
+			// Mini Map
+			BufferedImage miniMapBuf = bufferedImage.getSubimage(dimension.width / 2 - 16, dimension.height / 2, mapDimension.width, mapDimension.height);
+			Image miniMap = miniMapBuf.getScaledInstance(( mapDimension.width + dimension.width ) / 10, ( mapDimension.height + dimension.height ) / 10, Image.SCALE_FAST);
+			int miniMapCenterX = miniMap.getWidth(this) / 2;
+			// Draw each player view
+			graphics.drawImage(player1View, ( dimension.width / 2 ) + 10, 0, ( dimension.width / 2 ) - 10, (int) ( dimension.height * .7 ), this);
+			graphics.drawImage(player2View, 0, 0, ( dimension.width / 2 ) - 10, (int) ( dimension.height * .7 ), this);
+			// Draw Hud
+			graphics.setColor(Color.BLACK);
+			graphics.fillRect(0, (int) ( dimension.height * .7 ), dimension.width, dimension.height / 2);
+			graphics.drawImage(miniMap, ( dimension.width / 2 ) - miniMapCenterX, (int) ( dimension.height * .7 ), this);
+			graphics.drawImage(player1.getHealthBar(), dimension.width - 128, (int) ( dimension.height * .7 ), this);
+			graphics.drawImage(player2.getHealthBar(), 0, (int) ( dimension.height * .7 ), this);
+			for (int i = 0; i < player1.getLives(); i++) {
+				graphics.drawImage(Resources.getImage(GameImageType.LIFE.getResourceName()), dimension.width - 128 + 32 * i, (int) ( dimension.height * .7 ) + 32, this);
+			}
+			for (int i = 0; i < player2.getLives(); i++) {
+				graphics.drawImage(Resources.getImage(GameImageType.LIFE.getResourceName()), 0 + 32 * i, (int) ( dimension.height * .7 ) + 32, this);
+			}
+		} else {
+			if (player1.isAlive()) {
+				graphics.clearRect(0, 0, 4000, 4000);
+				graphics.drawString("Player1 Wins", dimension.width / 2, dimension.height / 2);
+			} else if (player2.isAlive()) {
+				graphics.clearRect(0, 0, 4000, 4000);
+				graphics.drawString("Player2 Wins", dimension.width / 2, dimension.height / 2);
+			}
 		}
-
-		// Mini Map
-		BufferedImage miniMapBuf = bufferedImage.getSubimage(dimension.width / 2 - 16, dimension.height / 2, mapDimension.width, mapDimension.height);
-		Image miniMap = miniMapBuf.getScaledInstance(( mapDimension.width + dimension.width ) / 10, ( mapDimension.height + dimension.height ) / 10, Image.SCALE_FAST);
-		int miniMapCenterX = miniMap.getWidth(this) / 2;
-
-		// Draw each player view
-		graphics.drawImage(player1View, ( dimension.width / 2 ) + 10, 0, ( dimension.width / 2 ) - 10, (int) ( dimension.height * .7 ), this);
-		graphics.drawImage(player2View, 0, 0, ( dimension.width / 2 ) - 10, (int) ( dimension.height * .7 ), this);
-
-		// Draw Hud
-		graphics.setColor(Color.BLACK);
-		graphics.fillRect(0, (int) ( dimension.height * .7 ), dimension.width, dimension.height / 2);
-		graphics.drawImage(miniMap, ( dimension.width / 2 ) - miniMapCenterX, (int) ( dimension.height * .7 ), this);
 	}
 
 	private Graphics2D createGraphics(int width, int height) {
@@ -216,12 +230,13 @@ public class GameBase extends JApplet implements Runnable {
 			tile.update();
 			tile.draw(graphics2d, this);
 
-			if (tile.isColliding(player1)) {
-				player1.stop();
-			}
-
-			if (tile.isColliding(player2)) {
-				player2.stop();
+			if (tile.getGameImageType() == GameImageType.WALL1 || tile.getGameImageType() == GameImageType.WALL2) {
+				if (tile.isColliding(player1)) {
+					player1.stop(tile.getPosX(), tile.getPosY());
+				}
+				if (tile.isColliding(player2)) {
+					player2.stop(tile.getPosX(), tile.getPosY());
+				}
 			}
 		}
 	}

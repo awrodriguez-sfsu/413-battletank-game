@@ -35,7 +35,7 @@ public class Resources {
 	private SolidObjectSpec border_spec, wall1_spec, wall2_spec, shell_basic_spec, shell_heavy_spec, shell_light_spec, tank_blue_basic_spec, tank_blue_heavy_spec, tank_blue_light_spec, tank_red_basic_spec, tank_red_heavy_spec, tank_red_light_spec,
 			basic_upgrade_spec, heavy_upgrade_spec, light_upgrade_spec, life_pickup_spec;
 
-	public AudioClip large_explosion_sound, shot;
+	public static AudioClip large_explosion_sound, shot;
 
 	private Resources() {
 		try {

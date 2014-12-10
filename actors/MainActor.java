@@ -5,6 +5,7 @@ import enums.GameObjectType;
 import gamebase.GameBase;
 import gamebase.Resources;
 
+import java.applet.AudioClip;
 import java.awt.Image;
 import java.awt.Rectangle;
 
@@ -17,11 +18,13 @@ public class MainActor extends Actor {
 	private int deflection = 3;
 
 	private int viewWidth = ( dimension.width / 2 ) - 10 + 128;
-	private int viewHeight = dimension.height + 128;
+	private int viewHeight = dimension.height;
 
 	private Image healthBar = Resources.health.get(8 - health);
 
 	public Rectangle view;
+
+	private AudioClip shot = Resources.shot;
 
 	public MainActor(GameImageType gameImage, GameObjectType type, double posX, double posY) {
 		super(gameImage, type, posX, posY);
@@ -30,6 +33,8 @@ public class MainActor extends Actor {
 
 	@Override
 	public void update() {
+
+		view.setLocation((int) posX + GameBase.getGameScreenDifference().width - ( viewWidth / 2 ), (int) posY + GameBase.getGameScreenDifference().height - ( viewHeight / 2 ));
 
 		if (direction >= 360 || direction <= -360) {
 			direction = 0;
@@ -44,7 +49,25 @@ public class MainActor extends Actor {
 			direction -= deflection;
 		}
 
-		view.setLocation((int) posX + GameBase.getGameScreenDifference().width - ( viewWidth / 2 ), (int) posY + GameBase.getGameScreenDifference().height - ( viewHeight / 2 ));
+		// Left Edge of Map
+		if (posX <= 32) {
+			posX = 32;
+		}
+
+		// Top Edge of Map
+		if (posY <= 32) {
+			posY = 32;
+		}
+
+		// Right Edge of Map
+		if (posX >= 1600 - 160) {
+			posX = 1600 - 160;
+		}
+
+		// Bottom Edge of Map
+		if (posY >= 1600 - 128) {
+			posY = 1600 - 128;
+		}
 	}
 
 	@Override
@@ -120,6 +143,7 @@ public class MainActor extends Actor {
 		if (canFire()) {
 			Projectile pShot = new Projectile(GameImageType.SHELL_HEAVY, GameImageType.TANK_BLUE_HEAVY, posX, posY, direction);
 			shots.add(pShot);
+			shot.play();
 		}
 
 		setCanFire(false);
@@ -140,6 +164,10 @@ public class MainActor extends Actor {
 		}
 	}
 
+	public int getLives() {
+		return lives;
+	}
+
 	public Image getHealthBar() {
 		return healthBar;
 	}
@@ -147,5 +175,6 @@ public class MainActor extends Actor {
 	@Override
 	public void explode() {
 		System.out.println("explode");
+		isAlive = false;
 	}
 }
