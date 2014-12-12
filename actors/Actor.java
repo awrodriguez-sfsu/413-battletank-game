@@ -17,9 +17,6 @@ public abstract class Actor extends GameObject {
 	protected double speedX = 0;
 	protected double speedY = 0;
 
-	protected double stopX = -100;
-	protected double stopY = -100;
-
 	protected double direction = 0;
 
 	protected boolean isMovingForward = false;
@@ -117,15 +114,20 @@ public abstract class Actor extends GameObject {
 		return shots;
 	}
 
-	public void stop(double posX, double posY) {
+	private void rollBack() {
+		speedX = -speedX;
+		speedY = -speedY;
+		this.update();
+	}
+
+	public void stop() {
+		rollBack();
+
 		speedX = 0;
 		speedY = 0;
 
 		isMovingForward = false;
 		isMovingBackward = false;
-
-		stopX = posX;
-		stopY = posY;
 	}
 
 	public boolean isColliding(GameObject object) {
@@ -141,9 +143,6 @@ public abstract class Actor extends GameObject {
 				}
 			}
 		}
-
-		stopX = -100;
-		stopY = -100;
 
 		return false;
 	}

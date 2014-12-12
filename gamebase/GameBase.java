@@ -250,10 +250,10 @@ public class GameBase extends JApplet implements Runnable {
 
 			if (tile.getGameImageType() == GameImageType.WALL1 || tile.getGameImageType() == GameImageType.WALL2) {
 				if (tile.isColliding(player1)) {
-					player1.stop(tile.getPosX(), tile.getPosY());
+					player1.stop();
 				}
 				if (tile.isColliding(player2)) {
-					player2.stop(tile.getPosX(), tile.getPosY());
+					player2.stop();
 				}
 			}
 		}
