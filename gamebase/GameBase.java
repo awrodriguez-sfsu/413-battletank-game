@@ -404,7 +404,8 @@ public class GameBase extends JApplet implements Runnable {
 		jFrame.addWindowListener(new WindowAdapter() {});
 		jFrame.getContentPane().add("Center", game);
 		jFrame.pack();
-		jFrame.setSize(new Dimension(GameBase.getDimension()));
+		//jFrame.setSize(new Dimension(GameBase.getDimension()));
+		jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		jFrame.setVisible(true);
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.start();

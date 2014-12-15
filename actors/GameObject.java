@@ -5,7 +5,6 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.ImageObserver;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import collision.GameObjectBounds;
 import enums.CollisionShape;
@@ -74,16 +73,16 @@ public abstract class GameObject {
 			graphics2d.drawImage(image, (int) posX + GameBase.getGameScreenDifference().width, (int) posY + GameBase.getGameScreenDifference().height, observer);
 		}
 
-		if (isSolid() && false) {
-			for (Iterator<GameObjectBounds> iterator = bounds.iterator(); iterator.hasNext();) {
-				GameObjectBounds gameObjectBounds = (GameObjectBounds) iterator.next();
-				if (gameObjectBounds.getShape() == CollisionShape.RECTANGLE) {
-					graphics2d.drawRect((int) gameObjectBounds.getX(), (int) gameObjectBounds.getY(), (int) gameObjectBounds.getWidth(), (int) gameObjectBounds.getHeight());
-				} else {
-					graphics2d.drawOval((int) gameObjectBounds.getX(), (int) gameObjectBounds.getY(), (int) gameObjectBounds.getWidth(), (int) gameObjectBounds.getHeight());
-				}
-			}
-		}
+		//		if (isSolid() && false) {
+		//			for (Iterator<GameObjectBounds> iterator = bounds.iterator(); iterator.hasNext();) {
+		//				GameObjectBounds gameObjectBounds = (GameObjectBounds) iterator.next();
+		//				if (gameObjectBounds.getShape() == CollisionShape.RECTANGLE) {
+		//					graphics2d.drawRect((int) gameObjectBounds.getX(), (int) gameObjectBounds.getY(), (int) gameObjectBounds.getWidth(), (int) gameObjectBounds.getHeight());
+		//				} else {
+		//					graphics2d.drawOval((int) gameObjectBounds.getX(), (int) gameObjectBounds.getY(), (int) gameObjectBounds.getWidth(), (int) gameObjectBounds.getHeight());
+		//				}
+		//			}
+		//		}
 
 		updateCollision();
 	}
@@ -91,16 +90,16 @@ public abstract class GameObject {
 	public void draw(Graphics2D graphics2d, AffineTransform transform, ImageObserver observer) {
 		graphics2d.drawImage(image, transform, observer);
 
-		if (isSolid() && false) {
-			for (Iterator<GameObjectBounds> iterator = bounds.iterator(); iterator.hasNext();) {
-				GameObjectBounds gameObjectBounds = (GameObjectBounds) iterator.next();
-				if (gameObjectBounds.getShape() == CollisionShape.RECTANGLE) {
-					graphics2d.drawRect((int) gameObjectBounds.getX(), (int) gameObjectBounds.getY(), (int) gameObjectBounds.getWidth(), (int) gameObjectBounds.getHeight());
-				} else {
-					graphics2d.drawOval((int) gameObjectBounds.getX(), (int) gameObjectBounds.getY(), (int) gameObjectBounds.getWidth(), (int) gameObjectBounds.getHeight());
-				}
-			}
-		}
+		//		if (isSolid() && false) {
+		//			for (Iterator<GameObjectBounds> iterator = bounds.iterator(); iterator.hasNext();) {
+		//				GameObjectBounds gameObjectBounds = (GameObjectBounds) iterator.next();
+		//				if (gameObjectBounds.getShape() == CollisionShape.RECTANGLE) {
+		//					graphics2d.drawRect((int) gameObjectBounds.getX(), (int) gameObjectBounds.getY(), (int) gameObjectBounds.getWidth(), (int) gameObjectBounds.getHeight());
+		//				} else {
+		//					graphics2d.drawOval((int) gameObjectBounds.getX(), (int) gameObjectBounds.getY(), (int) gameObjectBounds.getWidth(), (int) gameObjectBounds.getHeight());
+		//				}
+		//			}
+		//		}
 
 		updateCollision();
 	}

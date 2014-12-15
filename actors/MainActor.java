@@ -25,7 +25,7 @@ public class MainActor extends Actor {
 
 	public Rectangle view;
 
-	private AudioClip shot = (AudioClip) Resources.sounds.get("sound_shot");
+	private AudioClip shot = (AudioClip) Resources.sound_shot;
 
 	public MainActor(GameImageType gameImage, GameObjectType type, double posX, double posY) {
 		super(gameImage, type, posX, posY);
