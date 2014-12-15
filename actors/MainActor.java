@@ -193,7 +193,8 @@ public class MainActor extends Actor {
 	public void reset(int posX, int posY) {
 		this.posX = posX;
 		this.posY = posY;
-		this.health = 8;
+		this.health = 7;
+		adjustHealth(1);
 		this.lives = 2;
 	}
 }

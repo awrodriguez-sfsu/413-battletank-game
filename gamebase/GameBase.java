@@ -381,7 +381,7 @@ public class GameBase extends JApplet implements Runnable {
 		if (player1.isAlive()) {
 			player1.score++;
 		} else if (player2.isAlive()) {
-			player1.score++;
+			player2.score++;
 		}
 
 		player1.reset(100, 100);
