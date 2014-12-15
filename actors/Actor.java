@@ -118,6 +118,7 @@ public abstract class Actor extends GameObject {
 		speedX = -speedX;
 		speedY = -speedY;
 		this.update();
+		this.updateCollision();
 	}
 
 	public void stop() {

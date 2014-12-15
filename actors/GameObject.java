@@ -74,7 +74,7 @@ public abstract class GameObject {
 			graphics2d.drawImage(image, (int) posX + GameBase.getGameScreenDifference().width, (int) posY + GameBase.getGameScreenDifference().height, observer);
 		}
 
-		if (isSolid() && true) {
+		if (isSolid() && false) {
 			for (Iterator<GameObjectBounds> iterator = bounds.iterator(); iterator.hasNext();) {
 				GameObjectBounds gameObjectBounds = (GameObjectBounds) iterator.next();
 				if (gameObjectBounds.getShape() == CollisionShape.RECTANGLE) {
@@ -91,7 +91,7 @@ public abstract class GameObject {
 	public void draw(Graphics2D graphics2d, AffineTransform transform, ImageObserver observer) {
 		graphics2d.drawImage(image, transform, observer);
 
-		if (isSolid() && true) {
+		if (isSolid() && false) {
 			for (Iterator<GameObjectBounds> iterator = bounds.iterator(); iterator.hasNext();) {
 				GameObjectBounds gameObjectBounds = (GameObjectBounds) iterator.next();
 				if (gameObjectBounds.getShape() == CollisionShape.RECTANGLE) {
@@ -129,12 +129,9 @@ public abstract class GameObject {
 		return posY;
 	}
 
-	public Image getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
+	public void setGameImageType(GameImageType gameImageType) {
+		this.gameImageType = gameImageType;
+		this.image = Resources.getImage(gameImageType.getResourceName());
 	}
 
 	public void setSolid(boolean isSolid) {

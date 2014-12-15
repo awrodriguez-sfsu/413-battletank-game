@@ -6,12 +6,20 @@ import gamebase.Resources;
 
 public class Projectile extends Actor {
 
-	private final int MOVEMENT_SPEED = 25;
+	private final int MOVEMENT_SPEED;
 	private int deflection = 3;
 
 	public Projectile(GameImageType gameImage, GameImageType shooter, double posX, double posY, double direction) {
 		super(gameImage, GameObjectType.PROJECTILE, getX(posX, shooter, gameImage, direction), getY(posY, shooter, gameImage, direction));
 		this.direction = direction;
+
+		if (gameImage == GameImageType.SHELL_BASIC) {
+			MOVEMENT_SPEED = 30;
+		} else if (gameImage == GameImageType.SHELL_LIGHT) {
+			MOVEMENT_SPEED = 40;
+		} else {
+			MOVEMENT_SPEED = 17;
+		}
 
 		moveForward();
 	}
@@ -42,7 +50,7 @@ public class Projectile extends Actor {
 
 	@Override
 	public boolean isVisible() {
-		return true;
+		return ( posX >= 0 && posX <= 1600 && posY >= 0 && posY <= 1600 );
 	}
 
 	@Override

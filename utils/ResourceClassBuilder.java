@@ -36,8 +36,8 @@ public class ResourceClassBuilder {
 		String resourcesJSON = basePath + "resources.json";
 		String maps = basePath + "map1.txt";
 
-		String jarRun = "../"; // Applet Configuration
-		// String jarRun = ""; // Jar Configuration
+		//String jarRun = "../"; // Applet Configuration
+		String jarRun = ""; // Jar Configuration
 
 		System.out.println("Getting solid_resources.txt");
 		try (BufferedReader br = new BufferedReader(new FileReader(solidResourcesText))) {

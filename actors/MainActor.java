@@ -13,6 +13,7 @@ public class MainActor extends Actor {
 
 	protected int health = 8;
 	protected int lives = 2;
+	public int score = 0;
 
 	private final double MOVEMENT_SPEED = 15;
 	private int deflection = 3;
@@ -24,17 +25,17 @@ public class MainActor extends Actor {
 
 	public Rectangle view;
 
-	private AudioClip shot = Resources.shot;
+	private AudioClip shot = (AudioClip) Resources.sounds.get("sound_shot");
 
 	public MainActor(GameImageType gameImage, GameObjectType type, double posX, double posY) {
 		super(gameImage, type, posX, posY);
-		view = new Rectangle(0, 0, viewWidth, viewHeight);
+		view = new Rectangle(0, 0, (int) ( viewWidth / 1.5 ), (int) ( viewHeight / 1.5 ));
 	}
 
 	@Override
 	public void update() {
 
-		view.setLocation((int) posX + GameBase.getGameScreenDifference().width - ( viewWidth / 2 ), (int) posY + GameBase.getGameScreenDifference().height - ( viewHeight / 2 ));
+		view.setLocation((int) posX + GameBase.getGameScreenDifference().width - ( viewWidth / 3 ), (int) posY + GameBase.getGameScreenDifference().height - ( viewHeight / 3 ));
 
 		if (direction >= 360 || direction <= -360) {
 			direction = 0;
@@ -140,8 +141,19 @@ public class MainActor extends Actor {
 
 	@Override
 	public void fire() {
+		GameImageType tank = getGameImageType();
+		GameImageType shell = null;
+
+		if (tank == GameImageType.TANK_BLUE_BASIC || tank == GameImageType.TANK_RED_BASIC) {
+			shell = GameImageType.SHELL_BASIC;
+		} else if (tank == GameImageType.TANK_BLUE_HEAVY || tank == GameImageType.TANK_RED_HEAVY) {
+			shell = GameImageType.SHELL_HEAVY;
+		} else if (tank == GameImageType.TANK_BLUE_LIGHT || tank == GameImageType.TANK_RED_LIGHT) {
+			shell = GameImageType.SHELL_LIGHT;
+		}
+
 		if (canFire()) {
-			Projectile pShot = new Projectile(GameImageType.SHELL_HEAVY, GameImageType.TANK_BLUE_HEAVY, posX, posY, direction);
+			Projectile pShot = new Projectile(shell, tank, posX, posY, direction);
 			shots.add(pShot);
 			shot.play();
 		}
@@ -174,7 +186,14 @@ public class MainActor extends Actor {
 
 	@Override
 	public void explode() {
-		System.out.println("explode");
 		isAlive = false;
+		GameBase.reset();
+	}
+
+	public void reset(int posX, int posY) {
+		this.posX = posX;
+		this.posY = posY;
+		this.health = 8;
+		this.lives = 2;
 	}
 }

@@ -1,21 +1,27 @@
 package gamebase;
 
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Random;
 
 import javax.swing.JApplet;
+import javax.swing.JFrame;
 
 import actors.MainActor;
+import actors.PowerUp;
 import actors.Projectile;
 import background.Tile;
 import controller.Controls;
@@ -37,17 +43,27 @@ public class GameBase extends JApplet implements Runnable {
 	private static int deltaY;
 
 	private static ArrayList<Tile> tiles = new ArrayList<Tile>();
+	private static ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 
 	public static MainActor player1;
 	public static MainActor player2;
 
 	private static Controls controls;
 
+	private AudioClip backgroundMusic;
+
+	private FontMetrics metrics;
+
 	@Override
 	public void init() {
 		dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(dimension);
+		setBackground(Color.BLACK);
 		setFocusable(true);
+
+		// Set Font
+		setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
+		metrics = getFontMetrics(getFont());
 
 		Resources.getInstance();
 
@@ -61,6 +77,8 @@ public class GameBase extends JApplet implements Runnable {
 
 		controls = new Controls();
 		addKeyListener(controls);
+
+		backgroundMusic = Resources.sound_background;
 	}
 
 	@Override
@@ -68,6 +86,8 @@ public class GameBase extends JApplet implements Runnable {
 		Thread thread = new Thread(this);
 		thread.setPriority(Thread.MIN_PRIORITY);
 		thread.start();
+
+		backgroundMusic.loop();
 	}
 
 	@Override
@@ -110,6 +130,7 @@ public class GameBase extends JApplet implements Runnable {
 
 		Graphics2D graphicsHud = createGraphicsHud(dimension.width, (int) ( dimension.height * .3 ));
 		drawHud(graphicsHud);
+
 		graphicsHud.dispose();
 		graphicsGame.dispose();
 
@@ -139,7 +160,7 @@ public class GameBase extends JApplet implements Runnable {
 
 		graphics2d = bufferedGame.createGraphics();
 		graphics2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
-		graphics2d.setBackground(Color.BLACK);
+		graphics2d.clearRect(0, 0, width, height);
 
 		return graphics2d;
 	}
@@ -153,13 +174,12 @@ public class GameBase extends JApplet implements Runnable {
 
 		graphics2d = bufferedHud.createGraphics();
 		graphics2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
-		graphics2d.setBackground(Color.BLACK);
+		graphics2d.clearRect(0, 0, width, height);
 
 		return graphics2d;
 	}
 
 	private void drawGame(Graphics2D graphics2d) {
-
 		drawBackground(graphics2d);
 
 		AffineTransform transform1 = new AffineTransform();
@@ -188,8 +208,16 @@ public class GameBase extends JApplet implements Runnable {
 				b.draw(graphics2d, transformShot1, this);
 
 				if (b.isColliding(player2)) {
-					player2.adjustHealth(-1);
-					player1Shots.remove(i);
+					if (b.getGameImageType() == GameImageType.SHELL_BASIC) {
+						player2.adjustHealth(-2);
+						player1Shots.remove(i);
+					} else if (b.getGameImageType() == GameImageType.SHELL_HEAVY) {
+						player2.adjustHealth(-4);
+						player1Shots.remove(i);
+					} else {
+						player2.adjustHealth(-1);
+						player1Shots.remove(i);
+					}
 				}
 
 			} else {
@@ -209,8 +237,16 @@ public class GameBase extends JApplet implements Runnable {
 				b.draw(graphics2d, transformShot1, this);
 
 				if (b.isColliding(player1)) {
-					player1.adjustHealth(-1);
-					player2Shots.remove(i);
+					if (b.getGameImageType() == GameImageType.SHELL_BASIC) {
+						player1.adjustHealth(-2);
+						player2Shots.remove(i);
+					} else if (b.getGameImageType() == GameImageType.SHELL_HEAVY) {
+						player1.adjustHealth(-4);
+						player2Shots.remove(i);
+					} else {
+						player1.adjustHealth(-1);
+						player2Shots.remove(i);
+					}
 				}
 
 			} else {
@@ -230,21 +266,43 @@ public class GameBase extends JApplet implements Runnable {
 		graphics2d.drawImage(player1.getHealthBar(), dimension.width - 128, 0, this);
 		graphics2d.drawImage(player2.getHealthBar(), 0, 0, this);
 
+		// Draw Lives
 		for (int i = 0; i < player1.getLives(); i++) {
-			graphics2d.drawImage(Resources.getImage(GameImageType.LIFE.getResourceName()), dimension.width - 128 + 32 * i, 32, this);
-		}
-		for (int i = 0; i < player2.getLives(); i++) {
-			graphics2d.drawImage(Resources.getImage(GameImageType.LIFE.getResourceName()), 0 + 32 * i, 32, this);
+			graphics2d.drawImage(Resources.getImage(GameImageType.LIFE.getResourceName()), dimension.width - 128 + 32 * i, 42, this);
 		}
 
-		// graphics2d.drawImage(miniMap, 0, 0, this);
+		for (int i = 0; i < player2.getLives(); i++) {
+			graphics2d.drawImage(Resources.getImage(GameImageType.LIFE.getResourceName()), 0 + 32 * i, 42, this);
+		}
+
+		// Draw Tank Type
+		if (player1.getGameImageType() == GameImageType.TANK_BLUE_BASIC) {
+			graphics2d.drawImage(Resources.getImage(GameImageType.TANK_BASIC.getResourceName()), dimension.width - 128 - 8, 74, this);
+		} else if (player1.getGameImageType() == GameImageType.TANK_BLUE_HEAVY) {
+			graphics2d.drawImage(Resources.getImage(GameImageType.TANK_HEAVY.getResourceName()), dimension.width - 128 - 8, 74, this);
+		} else if (player1.getGameImageType() == GameImageType.TANK_BLUE_LIGHT) {
+			graphics2d.drawImage(Resources.getImage(GameImageType.TANK_LIGHT.getResourceName()), dimension.width - 128 - 8, 74, this);
+		}
+
+		if (player2.getGameImageType() == GameImageType.TANK_RED_BASIC) {
+			graphics2d.drawImage(Resources.getImage(GameImageType.TANK_BASIC.getResourceName()), 0, 74, this);
+		} else if (player2.getGameImageType() == GameImageType.TANK_RED_HEAVY) {
+			graphics2d.drawImage(Resources.getImage(GameImageType.TANK_HEAVY.getResourceName()), 0, 74, this);
+		} else if (player2.getGameImageType() == GameImageType.TANK_RED_LIGHT) {
+			graphics2d.drawImage(Resources.getImage(GameImageType.TANK_LIGHT.getResourceName()), 0, 74, this);
+		}
+
+		// Draw Score
+		graphics2d.setColor(Color.WHITE);
+		graphics2d.drawString(player1.score + "", (int) ( dimension.width - 10 - ( metrics.stringWidth(player1.score + "") ) ) + 2, 150);
+		graphics2d.drawString(player2.score + "", 0, 150);
 	}
 
 	private void drawBackground(Graphics2D graphics2d) {
 		graphics2d.drawImage(Resources.getImage(GameImageType.BACKGROUND_LARGE.getResourceName()), 0, 0, mapDimension.width + dimension.width, mapDimension.height + dimension.height, this);
 
-		for (Iterator<Tile> iterator = tiles.iterator(); iterator.hasNext();) {
-			Tile tile = (Tile) iterator.next();
+		for (int j = 0; j < tiles.size(); j++) {
+			Tile tile = (Tile) tiles.get(j);
 			tile.update();
 			tile.draw(graphics2d, this);
 
@@ -256,7 +314,78 @@ public class GameBase extends JApplet implements Runnable {
 					player2.stop();
 				}
 			}
+
+			ArrayList<Projectile> player1Shots = player1.getShots();
+			for (int i = 0; i < player1Shots.size(); i++) {
+				Projectile b = (Projectile) player1Shots.get(i);
+
+				if (b.isColliding(tile)) {
+					player1Shots.remove(i);
+					if (tile.getGameImageType() == GameImageType.WALL1) {
+						tile.setGameImageType(GameImageType.WALL2);
+					} else if (tile.getGameImageType() == GameImageType.WALL2) {
+						tiles.remove(j);
+					}
+				}
+			}
+
+			ArrayList<Projectile> player2Shots = player2.getShots();
+			for (int i = 0; i < player2Shots.size(); i++) {
+				Projectile b = (Projectile) player2Shots.get(i);
+
+				if (b.isColliding(tile)) {
+					player2Shots.remove(i);
+					if (tile.getGameImageType() == GameImageType.WALL1) {
+						tile.setGameImageType(GameImageType.WALL2);
+					} else if (tile.getGameImageType() == GameImageType.WALL2) {
+						tiles.remove(j);
+					}
+				}
+			}
 		}
+
+		Random random = new Random();
+		int action = random.nextInt(500) + 1;
+		if (action == 1) {
+			PowerUp powerUp = new PowerUp(GameImageType.LIFE_PICKUP, ( random.nextInt(40) + 1 ) * 32, ( random.nextInt(40) + 1 ) * 32);
+			powerUps.add(powerUp);
+		} else if (action == 2) {
+			PowerUp powerUp = new PowerUp(GameImageType.HEAVY_UPGRADE, ( random.nextInt(40) + 1 ) * 32, ( random.nextInt(40) + 1 ) * 32);
+			powerUps.add(powerUp);
+		} else if (action == 3) {
+			PowerUp powerUp = new PowerUp(GameImageType.LIGHT_UPGRADE, ( random.nextInt(40) + 1 ) * 32, ( random.nextInt(40) + 1 ) * 32);
+			powerUps.add(powerUp);
+		}
+
+		for (int i = 0; i < powerUps.size(); i++) {
+			PowerUp powerUp = (PowerUp) powerUps.get(i);
+
+			if (powerUp.isVisible()) {
+				powerUp.update();
+				powerUp.draw(graphics2d, this);
+				if (powerUp.isColliding(player1)) {
+					powerUp.upgrade(player1);
+					powerUps.remove(i);
+				} else if (powerUp.isColliding(player2)) {
+					powerUp.upgrade(player2);
+					powerUps.remove(i);
+				}
+			} else {
+				powerUps.remove(i);
+			}
+		}
+	}
+
+	public static void reset() {
+
+		if (player1.isAlive()) {
+			player1.score++;
+		} else if (player2.isAlive()) {
+			player1.score++;
+		}
+
+		player1.reset(100, 100);
+		player2.reset(1032, 1032);
 	}
 
 	public static Dimension getDimension() {
@@ -265,5 +394,19 @@ public class GameBase extends JApplet implements Runnable {
 
 	public static Dimension getGameScreenDifference() {
 		return new Dimension(deltaX, deltaY);
+	}
+
+	public static void main(String[] args) {
+		final GameBase game = new GameBase();
+		game.init();
+
+		JFrame jFrame = new JFrame("BattleTanks");
+		jFrame.addWindowListener(new WindowAdapter() {});
+		jFrame.getContentPane().add("Center", game);
+		jFrame.pack();
+		jFrame.setSize(new Dimension(GameBase.getDimension()));
+		jFrame.setVisible(true);
+		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		game.start();
 	}
 }

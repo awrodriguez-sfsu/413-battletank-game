@@ -29,49 +29,54 @@ public class Resources {
 	public static Dimension mapDimension;
 
 	public static ArrayList<String> lines = new ArrayList<String>();
-	private Image background, background_large, basic_upgrade, boder_horizontal, boder_vertical, border, healthbar0, healthbar1, healthbar2, healthbar3, healthbar4, healthbar5, healthbar6, healthbar7, healthbar8, heavy_upgrade, life, life_pickup,
-			light_upgrade, shell_basic, shell_heavy, shell_light, tank_blue_basic, tank_blue_heavy, tank_blue_light, tank_gray_basic, tank_gray_heavy, tank_gray_light, tank_red_basic, tank_red_heavy, tank_red_light, wall1, wall2;
+	private Image background, background_large, basic_upgrade, boder_horizontal, boder_vertical, border, explosion1, explosion2, explosion3, explosion4, explosion5, explosion6, explosion7, healthbar0, healthbar1, healthbar2, healthbar3, healthbar4, healthbar5, healthbar6, healthbar7, healthbar8, heavy_upgrade, life, life_pickup, light_upgrade, shell_basic, shell_heavy, shell_light, tank_blue_basic, tank_blue_heavy, tank_blue_light, tank_gray_basic, tank_gray_heavy, tank_gray_light, tank_red_basic, tank_red_heavy, tank_red_light, wall1, wall2;
 
-	private SolidObjectSpec border_spec, wall1_spec, wall2_spec, shell_basic_spec, shell_heavy_spec, shell_light_spec, tank_blue_basic_spec, tank_blue_heavy_spec, tank_blue_light_spec, tank_red_basic_spec, tank_red_heavy_spec, tank_red_light_spec,
-			basic_upgrade_spec, heavy_upgrade_spec, light_upgrade_spec, life_pickup_spec;
+	private SolidObjectSpec border_spec, wall1_spec, wall2_spec, shell_basic_spec, shell_heavy_spec, shell_light_spec, tank_blue_basic_spec, tank_blue_heavy_spec, tank_blue_light_spec, tank_red_basic_spec, tank_red_heavy_spec, tank_red_light_spec, basic_upgrade_spec, heavy_upgrade_spec, light_upgrade_spec, life_pickup_spec;
 
-	public static AudioClip large_explosion_sound, shot;
+	public AudioClip sound_background, sound_large_explosion, sound_shot;
 
 	private Resources() {
 		try {
-			background = ImageIO.read(new File("../resources/background.png"));
-			background_large = ImageIO.read(new File("../resources/background_large.png"));
-			basic_upgrade = ImageIO.read(new File("../resources/basic_upgrade.png"));
-			boder_horizontal = ImageIO.read(new File("../resources/boder_horizontal.png"));
-			boder_vertical = ImageIO.read(new File("../resources/boder_vertical.png"));
-			border = ImageIO.read(new File("../resources/border.png"));
-			healthbar0 = ImageIO.read(new File("../resources/healthbar0.png"));
-			healthbar1 = ImageIO.read(new File("../resources/healthbar1.png"));
-			healthbar2 = ImageIO.read(new File("../resources/healthbar2.png"));
-			healthbar3 = ImageIO.read(new File("../resources/healthbar3.png"));
-			healthbar4 = ImageIO.read(new File("../resources/healthbar4.png"));
-			healthbar5 = ImageIO.read(new File("../resources/healthbar5.png"));
-			healthbar6 = ImageIO.read(new File("../resources/healthbar6.png"));
-			healthbar7 = ImageIO.read(new File("../resources/healthbar7.png"));
-			healthbar8 = ImageIO.read(new File("../resources/healthbar8.png"));
-			heavy_upgrade = ImageIO.read(new File("../resources/heavy_upgrade.png"));
-			life = ImageIO.read(new File("../resources/life.png"));
-			life_pickup = ImageIO.read(new File("../resources/life_pickup.png"));
-			light_upgrade = ImageIO.read(new File("../resources/light_upgrade.png"));
-			shell_basic = ImageIO.read(new File("../resources/shell_basic.png"));
-			shell_heavy = ImageIO.read(new File("../resources/shell_heavy.png"));
-			shell_light = ImageIO.read(new File("../resources/shell_light.png"));
-			tank_blue_basic = ImageIO.read(new File("../resources/tank_blue_basic.png"));
-			tank_blue_heavy = ImageIO.read(new File("../resources/tank_blue_heavy.png"));
-			tank_blue_light = ImageIO.read(new File("../resources/tank_blue_light.png"));
-			tank_gray_basic = ImageIO.read(new File("../resources/tank_gray_basic.png"));
-			tank_gray_heavy = ImageIO.read(new File("../resources/tank_gray_heavy.png"));
-			tank_gray_light = ImageIO.read(new File("../resources/tank_gray_light.png"));
-			tank_red_basic = ImageIO.read(new File("../resources/tank_red_basic.png"));
-			tank_red_heavy = ImageIO.read(new File("../resources/tank_red_heavy.png"));
-			tank_red_light = ImageIO.read(new File("../resources/tank_red_light.png"));
-			wall1 = ImageIO.read(new File("../resources/wall1.png"));
-			wall2 = ImageIO.read(new File("../resources/wall2.png"));
+			background = ImageIO.read(new File("resources/background.png"));
+			background_large = ImageIO.read(new File("resources/background_large.png"));
+			basic_upgrade = ImageIO.read(new File("resources/basic_upgrade.png"));
+			boder_horizontal = ImageIO.read(new File("resources/boder_horizontal.png"));
+			boder_vertical = ImageIO.read(new File("resources/boder_vertical.png"));
+			border = ImageIO.read(new File("resources/border.png"));
+			explosion1 = ImageIO.read(new File("resources/explosion1.png"));
+			explosion2 = ImageIO.read(new File("resources/explosion2.png"));
+			explosion3 = ImageIO.read(new File("resources/explosion3.png"));
+			explosion4 = ImageIO.read(new File("resources/explosion4.png"));
+			explosion5 = ImageIO.read(new File("resources/explosion5.png"));
+			explosion6 = ImageIO.read(new File("resources/explosion6.png"));
+			explosion7 = ImageIO.read(new File("resources/explosion7.png"));
+			healthbar0 = ImageIO.read(new File("resources/healthbar0.png"));
+			healthbar1 = ImageIO.read(new File("resources/healthbar1.png"));
+			healthbar2 = ImageIO.read(new File("resources/healthbar2.png"));
+			healthbar3 = ImageIO.read(new File("resources/healthbar3.png"));
+			healthbar4 = ImageIO.read(new File("resources/healthbar4.png"));
+			healthbar5 = ImageIO.read(new File("resources/healthbar5.png"));
+			healthbar6 = ImageIO.read(new File("resources/healthbar6.png"));
+			healthbar7 = ImageIO.read(new File("resources/healthbar7.png"));
+			healthbar8 = ImageIO.read(new File("resources/healthbar8.png"));
+			heavy_upgrade = ImageIO.read(new File("resources/heavy_upgrade.png"));
+			life = ImageIO.read(new File("resources/life.png"));
+			life_pickup = ImageIO.read(new File("resources/life_pickup.png"));
+			light_upgrade = ImageIO.read(new File("resources/light_upgrade.png"));
+			shell_basic = ImageIO.read(new File("resources/shell_basic.png"));
+			shell_heavy = ImageIO.read(new File("resources/shell_heavy.png"));
+			shell_light = ImageIO.read(new File("resources/shell_light.png"));
+			tank_blue_basic = ImageIO.read(new File("resources/tank_blue_basic.png"));
+			tank_blue_heavy = ImageIO.read(new File("resources/tank_blue_heavy.png"));
+			tank_blue_light = ImageIO.read(new File("resources/tank_blue_light.png"));
+			tank_gray_basic = ImageIO.read(new File("resources/tank_gray_basic.png"));
+			tank_gray_heavy = ImageIO.read(new File("resources/tank_gray_heavy.png"));
+			tank_gray_light = ImageIO.read(new File("resources/tank_gray_light.png"));
+			tank_red_basic = ImageIO.read(new File("resources/tank_red_basic.png"));
+			tank_red_heavy = ImageIO.read(new File("resources/tank_red_heavy.png"));
+			tank_red_light = ImageIO.read(new File("resources/tank_red_light.png"));
+			wall1 = ImageIO.read(new File("resources/wall1.png"));
+			wall2 = ImageIO.read(new File("resources/wall2.png"));
 
 		} catch (IOException ioException) {
 			ioException.printStackTrace();
@@ -83,6 +88,13 @@ public class Resources {
 		images.put("boder_horizontal", boder_horizontal);
 		images.put("boder_vertical", boder_vertical);
 		images.put("border", border);
+		images.put("explosion1", explosion1);
+		images.put("explosion2", explosion2);
+		images.put("explosion3", explosion3);
+		images.put("explosion4", explosion4);
+		images.put("explosion5", explosion5);
+		images.put("explosion6", explosion6);
+		images.put("explosion7", explosion7);
 		images.put("healthbar0", healthbar0);
 		images.put("healthbar1", healthbar1);
 		images.put("healthbar2", healthbar2);
@@ -122,8 +134,9 @@ public class Resources {
 		health.put(8, healthbar8);
 
 		try {
-			large_explosion_sound = JApplet.newAudioClip(( new File("../resources/large_explosion_sound.wav").toURI().toURL() ));
-			shot = JApplet.newAudioClip(( new File("../resources/shot.wav").toURI().toURL() ));
+			sound_background = JApplet.newAudioClip(( new File("resources/sound_background.wav").toURI().toURL() ));
+			sound_large_explosion = JApplet.newAudioClip(( new File("resources/sound_large_explosion.wav").toURI().toURL() ));
+			sound_shot = JApplet.newAudioClip(( new File("resources/sound_shot.wav").toURI().toURL() ));
 
 		} catch (MalformedURLException exception) {
 			exception.printStackTrace();
@@ -166,7 +179,7 @@ public class Resources {
 			int width = 0;
 			int height = 0;
 
-			BufferedReader reader = new BufferedReader(new FileReader("../map1.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader("map1.txt"));
 			while (true) {
 				String line = reader.readLine();
 				if (line == null) {
@@ -228,7 +241,7 @@ public class Resources {
 		public SolidObjectSpec(String name) {
 			parser = new JSONParser();
 			try {
-				JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("../resources.json"));
+				JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("resources.json"));
 				JSONObject objectSpecifications = (JSONObject) jsonObject.get(name);
 				JSONObject bounds = (JSONObject) objectSpecifications.get("bounds");
 

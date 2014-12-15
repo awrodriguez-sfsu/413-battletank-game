@@ -1,5 +1,6 @@
 package controller;
 
+import enums.GameImageType;
 import gamebase.GameBase;
 
 import java.awt.event.KeyEvent;
@@ -16,9 +17,7 @@ public class Controls implements KeyListener {
 
 	Set<Integer> keysPressed = new HashSet<>();
 
-	public Controls() {
-
-	}
+	public Controls() {}
 
 	@Override
 	public void keyPressed(KeyEvent event) {
@@ -98,6 +97,18 @@ public class Controls implements KeyListener {
 			}
 		} else {
 			player2.setCanFire(true);
+		}
+
+		if (keysPressed.contains(KeyEvent.VK_Q)) {
+			if (player1.getGameImageType() == GameImageType.TANK_BLUE_BASIC) {
+				player1.setGameImageType(GameImageType.TANK_BLUE_HEAVY);
+			} else if (player1.getGameImageType() == GameImageType.TANK_BLUE_HEAVY) {
+				player1.setGameImageType(GameImageType.TANK_BLUE_LIGHT);
+			} else {
+				player1.setGameImageType(GameImageType.TANK_BLUE_BASIC);
+			}
+
+			keysPressed.remove(KeyEvent.VK_Q);
 		}
 	}
 
